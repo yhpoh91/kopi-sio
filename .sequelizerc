@@ -1,4 +1,5 @@
 require('dotenv').config();
+const fs = require('fs');
 const path = require('path');
 
 let directory = '';
@@ -10,9 +11,18 @@ if (process.env.NODE_ENV === 'production') {
   directory = 'src/services/database';
 }
 
+const configPath = path.resolve(directory, 'config.js');
+const modelsPath = path.resolve(directory, 'models');
+const seedersPath = path.resolve(directory, 'seeders');
+const migrationsPath = path.resolve(directory, 'migrations');
+
+fs.mkdirSync(modelsPath, { recursive: true });
+fs.mkdirSync(seedersPath, { recursive: true });
+fs.mkdirSync(migrationsPath, { recursive: true });
+
 module.exports = {
-  'config': path.resolve(directory, 'config.js'),
-  'models-path': path.resolve(directory, 'models'),
-  'seeders-path': path.resolve(directory, 'seeders'),
-  'migrations-path': path.resolve(directory, 'migrations')
-}
+  'config': configPath,
+  'models-path': modelsPath,
+  'seeders-path': seedersPath,
+  'migrations-path': migrationsPath
+};
