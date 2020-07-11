@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "NODE_ENV=production node build/webIndex.js",
-    "web": "NODE_ENV=develop babel-node src/webIndex.js",
+    "web": "NODE_ENV=development babel-node src/webIndex.js",
     "clean": "rm -rf build",
     "build": "npm run clean && babel src -D -d build",
     "migrate": "sequelize-cli db:migrate",
