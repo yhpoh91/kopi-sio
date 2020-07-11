@@ -1,0 +1,18 @@
+require('dotenv').config();
+const path = require('path');
+
+let directory = '';
+if (process.env.NODE_ENV === 'production') {
+  console.log('Using Production sequelizerc: build');
+  directory = 'build/services/database';
+} else {
+  console.log('Using Develop sequelizerc: src');
+  directory = 'src/services/database';
+}
+
+module.exports = {
+  'config': path.resolve(directory, 'config.js'),
+  'models-path': path.resolve(directory, 'models'),
+  'seeders-path': path.resolve(directory, 'seeders'),
+  'migrations-path': path.resolve(directory, 'migrations')
+}
