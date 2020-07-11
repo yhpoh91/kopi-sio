@@ -1,0 +1,22 @@
+{
+  "name": "Kopi SIO",
+  "description": "A simple identification service by Kopitech",
+  "repository": "https://github.com/yhpoh91/kopi-sio",
+  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "env": {
+    "IS_HEROKU": {
+      "desription": "Stating that this is a heroku application",
+      "required": true,
+      "default": true,
+    },
+    "HEROKU_APP_NAME" : {
+      "description": "Name of Heroku App. Copy from the name",
+      "required": true
+    },
+    "TIMEZONE": {
+      "description": "Timezone to be used",
+      "required": false,
+      "default": "Etc/UTC"
+    }
+  }
+}
