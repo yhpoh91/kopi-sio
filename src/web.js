@@ -36,7 +36,7 @@ app.use(bodyParser.json());
 
 // Api Router
 app.get('/', (_, res) => res.send('You have reached Kopi SIO'));
-app.get('/oauth/google', (_, res) => res.redirect(oauthService.google.getOAuthUrl));
+app.get('/oauth/google', (_, res) => res.redirect(oauthService.google.getOAuthUrl()));
 app.get('/oauth/google/redirect', async (req, res) => {
   console.log('Redirect GET');
   const { code, state } = req.query;
