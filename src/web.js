@@ -40,6 +40,13 @@ app.get('/oauth/google', (_, res) => res.redirect(oauthService.google.getOAuthUr
 app.get('/oauth/google/redirect', async (req, res) => {
   console.log('Redirect GET');
   const { code, state } = req.query;
+  if (code == null) {
+    // Initial response to Oauth
+    res.send();
+    return;
+  }
+
+  // Final response to User
   const token = await oauthService.google.getToken(code, state);
   res.json(token);
 });
