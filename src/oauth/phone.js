@@ -44,7 +44,7 @@ router.post('/login', async (req, res) => {
       return;
     }
   
-    res.status(500).send(result.errorText);
+    res.redirect(`${publicHost}/phoneLogin.html?state=${state}&redirect_uri=${redirectUri}&error=${result.errorText}`);
   } catch (error) {
     next(error);
   }
@@ -60,11 +60,7 @@ router.post('/verify', async (req, res) => {
     // Submit Verify Check
     const result = await nexmoService.verify.check(requestId, code);
     if (result.ok) {
-      res.json({
-        number,
-        state,
-        requestId
-      });
+      res.redirect(`${publicHost}/phoneSetup.html?number=${number}&state=${state}&redirect_uri=${redirectUri}`);
       return;
     }
 

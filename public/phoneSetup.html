@@ -70,6 +70,7 @@
       width: 100%;
       color: red;
       font-style: italic;
+      margin-top: 16px;
     }
 
     .asterisk {
@@ -109,7 +110,7 @@
               <input type="email" id="email" name="email">
             </div>
 
-            <button id="register" name="register">Register</button>
+            <button id="setup" name="setup">Complete Setup</button>
 
             <div id="error" class="error"></div>
           </div>
@@ -142,33 +143,24 @@
             errorDiv.innerText = params.error;
           }
 
-          const button = document.getElementById('verify');
+          const button = document.getElementById('setup');
           button.onclick = () => {
-            const element1 = document.getElementById('code');
+            const element1 = document.getElementById('firstName');
+            const element2 = document.getElementById('lastName');
+            const element3 = document.getElementById('email');
 
-            const element2 = document.createElement('input');
-            element2.id = 'number';
-            element2.name = 'number';
+            const element4 = document.createElement('input');
+            element2.id = 'phone';
+            element2.name = 'phone';
             element2.value = params.number;
-
-            const element3 = document.createElement('input');
-            element3.id = 'state';
-            element3.name = 'state';
-            element3.value = params.state;
-
-            const element5 = document.createElement('input');
-            element5.id = 'redirectUri';
-            element5.name = 'redirectUri';
-            element5.value = params.redirect_uri;
             
             const form = document.createElement('form');
             form.method = 'POST';
-            form.action = '/oauth/phone/verify';
+            form.action = '/oauth/phone/setup';
             form.appendChild(element1);
             form.appendChild(element2);
             form.appendChild(element3);
             form.appendChild(element4);
-            form.appendChild(element5);
 
             document.body.appendChild(form);
             form.submit();

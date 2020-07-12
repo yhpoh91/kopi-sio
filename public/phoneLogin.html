@@ -88,11 +88,11 @@
             <div class="form-field">
               <label>Enter your phone number to login</label>
               <input type="tel" id="number" name="number">
+              <div id="error" class="error"></div>
             </div>
 
             <button id="login" name="login">Login</button>
 
-            <div id="error" class="error"></div>
           </div>
 
         </div>
@@ -119,6 +119,10 @@
           };
 
           const params = getParams();
+          if (params.error && params.error !== '') {
+            const errorDiv = document.getElementById('error');
+            errorDiv.innerText = params.error;
+          }
 
           const numberInput = document.getElementById('number');
           const intlInstance = window.intlTelInput(numberInput, {
