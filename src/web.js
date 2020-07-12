@@ -5,6 +5,7 @@ import http from 'http';
 import helmet from 'helmet';
 
 import apiRouter from './api';
+import oauthRouter from './oauth'; 
 import oauthService from './services/oauth';
 import loggerService from './services/logger';
 import errorHandler from './services/errorHandler';
@@ -37,47 +38,8 @@ app.use(bodyParser.json());
 
 // Api Router
 app.get('/', (_, res) => res.send('You have reached Kopi SIO'));
-
-// Google OAuth
-app.get('/oauth/google', (_, res) => res.redirect(oauthService.google.getOAuthUrl()));
-app.get('/oauth/google/redirect', async (req, res) => {
-  const { code, state } = req.query;
-  if (code == null) {
-    // Initial response to Oauth
-    res.send();
-    return;
-  }
-
-  // Final response to User
-  const token = await oauthService.google.getToken(code, state);
-  res.json(token);
-});
-
-// Facebook OAuth
-app.get('/oauth/facebook', (_, res) => res.redirect(oauthService.facebook.getOAuthUrl()));
-app.get('/oauth/facebook/redirect', async (req, res) => {
-  const { code, state } = req.query;
-  if (code == null) {
-    // Initial response to Oauth
-    res.send();
-    return;
-  }
-
-  // Final response to User
-  const token = await oauthService.facebook.getToken(code, state);
-  res.json(token);
-});
-app.get('/oauth/facebook/deleteData', async (req, res) => {
-  await oauthService.facebook.deleteData(req.query);
-  res.send();
-});
-app.get('/oauth/facebook/deauthorize', async (req, res) => {
-  await oauthService.facebook.deauthorize(req.query);
-  res.send();
-});
-
-
 app.use('/api', apiRouter);
+app.use('/oauth', oauthRouter);
 app.use(errorHandler.handleUnmatched);
 app.use(errorHandler.handleError);
 
