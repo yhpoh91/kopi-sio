@@ -37,7 +37,7 @@ app.use(bodyParser.json());
 
 
 // Api Router
-app.get('/', (_, res) => res.send('You have reached Kopi SIO'));
+app.use('/', express.static('public'));
 app.use('/api', apiRouter);
 app.use('/oauth', oauthRouter);
 app.use(errorHandler.handleUnmatched);
