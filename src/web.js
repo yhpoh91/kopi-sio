@@ -35,6 +35,15 @@ app.use(bodyParser.json());
 
 // Api Router
 app.get('/', (_, res) => res.send('You have reached Kopi SIO'));
+app.get('/oauth/google/redirect', (req, res) => {
+  console.log('Redirect GET');
+  console.log(req.query);
+});
+app.post('/oauth/google/redirect', (req, res) => {
+  console.log('Redirect POST');
+  console.log(req.query);
+  console.log(req.body);
+});
 app.use('/api', apiRouter);
 app.use(errorHandler.handleUnmatched);
 app.use(errorHandler.handleError);
