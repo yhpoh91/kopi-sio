@@ -5,6 +5,7 @@ import http from 'http';
 import helmet from 'helmet';
 
 import apiRouter from './api';
+import oauthService from './services/oauth';
 import loggerService from './services/logger';
 import errorHandler from './services/errorHandler';
 
@@ -35,16 +36,12 @@ app.use(bodyParser.json());
 
 // Api Router
 app.get('/', (_, res) => res.send('You have reached Kopi SIO'));
-app.get('/oauth/google/redirect', (req, res) => {
+app.get('/oauth/google', (_, res) => res.redirect(oauthService.google.getOAuthUrl));
+app.get('/oauth/google/redirect', async (req, res) => {
   console.log('Redirect GET');
-  console.log(req.query);
-  res.send();
-});
-app.post('/oauth/google/redirect', (req, res) => {
-  console.log('Redirect POST');
-  console.log(req.query);
-  console.log(req.body);
-  res.send();
+  const { code, state } = req.query;
+  const token = await oauthService.google.getToken(code, state);
+  res.json(token);
 });
 app.use('/api', apiRouter);
 app.use(errorHandler.handleUnmatched);
