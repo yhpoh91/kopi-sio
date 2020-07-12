@@ -7,7 +7,7 @@
     "IS_HEROKU": {
       "desription": "Stating that this is a heroku application",
       "required": true,
-      "default": true,
+      "default": true
     },
     "HEROKU_APP_NAME" : {
       "description": "Name of Heroku App. Copy from the name",
@@ -15,8 +15,44 @@
     },
     "TIMEZONE": {
       "description": "Timezone to be used",
-      "required": false,
+      "required": true,
       "default": "Etc/UTC"
+    },
+    "OAUTH_GOOGLE_CLIENT_ID": {
+      "description": "Google OAuth Client ID",
+      "required": false
+    },
+    "OAUTH_GOOGLE_CLIENT_SECRET": {
+      "description": "Google OAuth Client Secret",
+      "required": false
+    },
+    "OAUTH_GOOGLE_SCOPE": {
+      "description": "Google OAuth Scope",
+      "required": true,
+      "default": "email,profile,openid"
+    },
+    "OAUTH_GOOGLE_ACCESS_TYPE": {
+      "description": "Google OAuth Access Type (online/offline)",
+      "required": true,
+      "default": "offline"
+    },
+    "OAUTH_FACEBOOK_CLIENT_ID": {
+      "description": "Facebook OAuth Client ID",
+      "required": false
+    },
+    "OAUTH_FACEBOOK_CLIENT_SECRET": {
+      "description": "Facebook OAuth Client Secret",
+      "required": false
+    },
+    "OAUTH_FACEBOOK_CLIENT_SCOPE": {
+      "description": "Facebook OAuth Scope",
+      "required": true,
+      "default": "email"
+    },
+    "OAUTH_FACEBOOK_CLIENT_REREQUEST": {
+      "description": "Facebook OAuth Re-request for denied permission",
+      "required": true,
+      "default": "true"
     }
   }
 }
