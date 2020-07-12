@@ -31,6 +31,7 @@ const getToken = async (code) => {
     const { data } = response;
 
     const mappedData = {
+      idToken: data.id_token,
       accessToken: data.access_token,
       expiresIn: data.expires_in,
       refreshToken: data.refresh_token,
