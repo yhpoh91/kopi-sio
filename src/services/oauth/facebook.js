@@ -19,7 +19,7 @@ const getOAuthUrl = () => {
   return url;
 };
 
-const getToken = async (code) => {
+const getToken = async (code, state) => {
   try {
     const clientId = process.env.OAUTH_FACEBOOK_CLIENT_ID;
     const clientSecret = process.env.OAUTH_FACEBOOK_CLIENT_SECRET;
@@ -47,7 +47,7 @@ const getToken = async (code) => {
     const mappedUserData = {
       id: userData.id,
       firstName: userData.first_name,
-      last_name: userData.last_name,
+      lastName: userData.last_name,
       name: userData.name,
       email: userData.email,
       picture: ((userData.picture || {}).data || {}).url,
