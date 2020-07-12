@@ -50,7 +50,7 @@ const getToken = async (code) => {
       last_name: userData.last_name,
       name: userData.name,
       email: userData.email,
-      picture: ((userData || {}).data || {}).url,
+      picture: ((userData.picture || {}).data || {}).url,
     };
   
     const data = {
