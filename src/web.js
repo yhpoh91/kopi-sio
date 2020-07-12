@@ -38,11 +38,13 @@ app.get('/', (_, res) => res.send('You have reached Kopi SIO'));
 app.get('/oauth/google/redirect', (req, res) => {
   console.log('Redirect GET');
   console.log(req.query);
+  res.send();
 });
 app.post('/oauth/google/redirect', (req, res) => {
   console.log('Redirect POST');
   console.log(req.query);
   console.log(req.body);
+  res.send();
 });
 app.use('/api', apiRouter);
 app.use(errorHandler.handleUnmatched);
