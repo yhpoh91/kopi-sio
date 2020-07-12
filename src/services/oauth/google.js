@@ -29,7 +29,6 @@ const getToken = async (code) => {
     };
     const response = await axios.post(url, body);
     const { data } = response;
-    console.log(data);
 
     const mappedData = {
       accessToken: data.access_token,
