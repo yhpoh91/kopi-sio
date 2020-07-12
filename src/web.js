@@ -8,6 +8,7 @@ import apiRouter from './api';
 import oauthService from './services/oauth';
 import loggerService from './services/logger';
 import errorHandler from './services/errorHandler';
+import { RSA_NO_PADDING } from 'constants';
 
 const environment = process.env.NODE_ENV || 'development';
 const listenIp = '0.0.0.0';
@@ -58,7 +59,17 @@ app.get('/oauth/facebook', (_, res) => res.redirect(oauthService.facebook.getOAu
 app.get('/oauth/facebook/redirect', async (req, res) => {
   console.log('Facebook Redirect GET');
   console.log(req.query);
-  res.send();
+  
+  const { code, state } = req.query;
+  if (code == null) {
+    // Initial response to Oauth
+    res.send();
+    return;
+  }
+
+  // Final response to User
+  const token = await oauthService.facebook.getToken(code, state);
+  res.json(token);
 });
 app.get('/oauth/facebook/deleteData', async (req, res) => {
   console.log('Facebook Delete Data GET');
