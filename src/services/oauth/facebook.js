@@ -1,7 +1,10 @@
 import axios from 'axios';
+import loggerService from '../logger';
 
 const isHeroku = (process.env.IS_HEROKU || 'false').toLowerCase() === 'true';
 const publicHost = isHeroku ? `https://${process.env.HEROKU_APP_NAME}.herokuapp.com` : process.env.PUBLIC_HOST;
+
+const { L } = loggerService('Facebook Oauth Service');
 
 const getOAuthUrl = () => {
   const state = 'teststate';
@@ -57,7 +60,6 @@ const getToken = async (code, state) => {
       token: mappedTokenData,
       user: mappedUserData,
     };
-    console.log(data);
     return Promise.resolve(data);
   } catch (error) {
     return Promise.reject(error);
@@ -65,12 +67,12 @@ const getToken = async (code, state) => {
 };
 
 const deleteData = async () => {
-  console.log('Facebook Delete Data request detected');
+  L.info('Facebook Delete Data request detected');
   return Promise.resolve();
 };
 
 const deauthorize = async () => {
-  console.log('Facebook Deauthorizae callback detected');
+  L.info('Facebook Deauthorize callback detected');
   return Promise.resolve();
 };
 
