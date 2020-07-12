@@ -10,6 +10,12 @@
       -webkit-box-sizing: border-box;
     }
 
+    label {
+      font-weight: 500;
+      font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+      margin-bottom: 8px;
+    }
+
     .outer-container {
       width: 100%;
       height: 100vh;
@@ -45,10 +51,19 @@
 
     .content-body {
       width: 100%;
+      display: flex;
+      flex-direction: column;
       padding-top: 8px;
       padding-bottom: 8px;
       padding-left: 16px;
       padding-right: 16px;
+    }
+
+    .form-field {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 16px;
     }
 
     .error {
@@ -69,8 +84,10 @@
           </div>
 
           <div class="content-body">
-            <h3>Enter the OTP sent to your phone</h3>
-            <input type="number" id="code" name="code">
+            <div class="form-field">
+              <label>Enter the OTP sent to your phone</label>
+              <input type="number" id="code" name="code">
+            </div>
 
             <button id="verify" name="verify">Verify</button>
 
