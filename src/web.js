@@ -36,9 +36,11 @@ app.use(bodyParser.json());
 
 // Api Router
 app.get('/', (_, res) => res.send('You have reached Kopi SIO'));
+
+// Google OAuth
 app.get('/oauth/google', (_, res) => res.redirect(oauthService.google.getOAuthUrl()));
 app.get('/oauth/google/redirect', async (req, res) => {
-  console.log('Redirect GET');
+  console.log('Google Redirect GET');
   const { code, state } = req.query;
   if (code == null) {
     // Initial response to Oauth
@@ -50,6 +52,28 @@ app.get('/oauth/google/redirect', async (req, res) => {
   const token = await oauthService.google.getToken(code, state);
   res.json(token);
 });
+
+// Facebook OAuth
+app.get('/oauth/facebook', (_, res) => res.redirect(oauthService.facebook.getOAuthUrl()));
+app.get('/oauth/facebook/redirect', async (req, res) => {
+  console.log('Facebook Redirect GET');
+  console.log(req.query);
+  res.send();
+});
+app.get('/oauth/facebook/deleteData', async (req, res) => {
+  console.log('Facebook Delete Data GET');
+  console.log(req.query);
+  await oauthService.facebook.deleteData();
+  res.send();
+});
+app.get('/oauth/facebook/deauthorize', async (req, res) => {
+  console.log('Facebook Deauthorize GET');
+  console.log(req.query);
+  await oauthService.facebook.deauthorize();
+  res.send();
+});
+
+
 app.use('/api', apiRouter);
 app.use(errorHandler.handleUnmatched);
 app.use(errorHandler.handleError);
