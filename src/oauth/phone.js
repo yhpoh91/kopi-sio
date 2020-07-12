@@ -31,6 +31,13 @@ router.get('/redirect', async (req, res) => {
   }
 });
 
+router.get('/token', (req, res) => {
+  const { code } = req.query;
+  res.status(401).send('unauthenticated');
+});
+
+
+
 router.post('/login', async (req, res) => {
   try {
     console.log(req.body);
@@ -69,21 +76,21 @@ router.post('/verify', async (req, res) => {
   } catch (error) {
     next(error);
   }
-})
+});
 
-router.get('/token', (req, res) => {
-  const { code } = req.query;
+router.post('/setup', async (req, res) => {
+  try {
+    console.log(req.body);
+    const {
+      number, firstName, lastName, email,
+    } = req.body;
 
-  if (code === 'MeowIsTheOneTrueMeow') {
-    res.status(200).json({
-      access_token: "meow",
-      token_type: "bearer",
-      expiresIn: 3600000,
-    });
-    return;
+    // Create New Phone User
+
+    res.send('ok');
+  } catch (error) {
+    next(error);
   }
-
-  res.status(401).send('unauthenticated');
 });
 
 export default router;
