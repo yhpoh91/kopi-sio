@@ -20,39 +20,48 @@ const getOAuthUrl = () => {
 };
 
 const getToken = async (code) => {
-  const clientId = process.env.OAUTH_FACEBOOK_CLIENT_ID;
-  const clientSecret = process.env.OAUTH_FACEBOOK_CLIENT_SECRET;
-  const redirectUri = `${publicHost}/oauth/facebook/redirect`;
-
-  // Get Token
-  const tokenUrl = `https://graph.facebook.com/v7.0/oauth/access_token?client_id=${clientId}&client_secret=${clientSecret}&redirect_uri=${redirectUri}&code=${code}`;
-  const tokenResponse = await axios.get(tokenUrl);
-  const { data: tokenData } = tokenResponse;
-  const mappedTokenData = {
-    accessToken: tokenData.access_token,
-    tokenType: tokenData.token_type,
-    expiresIn: tokenData.expires_in,
-    authType: tokenData.auth_type,
-  };
-
-  const userDataUrl = 'https://graph.facebook.com/v7.0/me?fields=email,first_name,last_name,name,picture.type(large)';
-  const userDataResponse = await axios.get(userDataUrl);
-  const { data: userData } = userDataResponse;
-  const mappedUserData = {
-    id: userData.id,
-    firstName: userData.first_name,
-    last_name: userData.last_name,
-    name: userData.name,
-    email: userData.email,
-    picture: ((userData || {}).data || {}).url,
-  };
-
-  const data = {
-    token: mappedTokenData,
-    user: mappedUserData,
-  };
-  console.log(data);
-  return Promise.resolve(data);
+  try {
+    const clientId = process.env.OAUTH_FACEBOOK_CLIENT_ID;
+    const clientSecret = process.env.OAUTH_FACEBOOK_CLIENT_SECRET;
+    const redirectUri = `${publicHost}/oauth/facebook/redirect`;
+  
+    // Get Token
+    const tokenUrl = `https://graph.facebook.com/v7.0/oauth/access_token?client_id=${clientId}&client_secret=${clientSecret}&redirect_uri=${redirectUri}&code=${code}`;
+    const tokenResponse = await axios.get(tokenUrl);
+    const { data: tokenData } = tokenResponse;
+    const mappedTokenData = {
+      accessToken: tokenData.access_token,
+      tokenType: tokenData.token_type,
+      expiresIn: tokenData.expires_in,
+      authType: tokenData.auth_type,
+    };
+  
+    const userDataUrl = 'https://graph.facebook.com/v7.0/me?fields=email,first_name,last_name,name,picture.type(large)';
+    const userDataConfig = {
+      headers: {
+        Authorization: `Bearer ${mappedTokenData.accessToken}`,
+      },
+    };
+    const userDataResponse = await axios.get(userDataUrl, userDataConfig);
+    const { data: userData } = userDataResponse;
+    const mappedUserData = {
+      id: userData.id,
+      firstName: userData.first_name,
+      last_name: userData.last_name,
+      name: userData.name,
+      email: userData.email,
+      picture: ((userData || {}).data || {}).url,
+    };
+  
+    const data = {
+      token: mappedTokenData,
+      user: mappedUserData,
+    };
+    console.log(data);
+    return Promise.resolve(data);
+  } catch (error) {
+    return Promise.reject(error);
+  }
 };
 
 const deleteData = async () => {
